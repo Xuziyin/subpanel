@@ -1,0 +1,36 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "subpanel",
+  "main": "src/index.ts",
+  "compatibility_date": "2026-06-30",
+  "compatibility_flags": ["nodejs_compat"],
+  "workers_dev": true,
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 0.1
+  },
+  "vars": {
+    "SITE_NAME": "Sub Panel"
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "migrations_dir": "migrations","database_id": "b5f30b49-864c-403f-8e1d-3041062442c2","database_name": "subpanel"
+    }
+  ],
+  "triggers": {
+    "crons": [
+      "*/5 * * * *"
+    ]
+  },
+  "assets": {
+    "directory": "./web/dist",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": [
+      "/api/*",
+      "/sub/*",
+      "/health/*"
+    ]
+  }
+}
